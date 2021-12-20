@@ -1,44 +1,1 @@
-import datetime
-
-from docxtpl import DocxTemplate
-from docxtpl import InlineImage
-from docx.shared import Cm
-from docxtpl import DocxTemplate, InlineImage
-
-
-def get_context(brand, model, fuel_consumption, price):
-    return {
-        'brand': brand,
-        'model': model,
-        'fuel_consumption': fuel_consumption,
-        'price': price
-    }
-
-
-def from_template(brand, model, fuel_consumption, price, template, signature):
-    template = DocxTemplate(template)
-    context = get_context(brand, model, fuel_consumption, price)
-
-    # Задаём параметры картинки
-    img_size = Cm(15)
-    acc = InlineImage(template, signature, img_size)
-
-    # Насыщаем шаблон передаваемой информацией
-    context['acc'] = acc
-    template.render(context)
-
-    # Сохраняем получившийся файл с информацией
-    template.save(brand + '_' + str(datetime.datetime.now().date()) + '_data.docx')
-
-
-def generate_report(brand, model, fuel_consumption, price):
-    template = 'report.docx'
-    signature = 'skoda.jpeg'
-    document = from_template(brand, model, fuel_consumption, price, template, signature)
-
-
-def to_fixed(num_obj, digits=0):
-    return f"{num_obj:.{digits}f}"
-
-
-generate_report('Skoda', 'Octavia', '9 l/100 km', '1 500 000 RUB')
+# # Задание Ultra Lite## # Имортируем необходимые модули# import datetime# from docx.shared import Cm# from docxtpl import DocxTemplate, InlineImage### # Создаём функцию для заполнения шаблона# def get_context(brand, model, fuel_consumption, price):#     return {#         'brand': brand,#         'model': model,#         'fuel_consumption': fuel_consumption,#         'price': price#     }### def from_template(brand, model, fuel_consumption, price, template, signature):#     template = DocxTemplate(template)#     context = get_context(brand, model, fuel_consumption, price)##     # Задаём параметры картинки#     img_size = Cm(15)#     acc = InlineImage(template, signature, img_size)##     # Насыщаем шаблон передаваемой информацией#     context['acc'] = acc#     template.render(context)##     # Сохраняем получившийся файл с информацией#     template.save(brand + '_' + str(datetime.datetime.now().date()) + '_data.docx')### def generate_report(brand, model, fuel_consumption, price):#     template = 'report.docx'#     signature = 'skoda.jpeg'#     document = from_template(brand, model, fuel_consumption, price, template, signature)### # Функция текущей даты# def to_fixed(num_obj, digits=0):#     return f"{num_obj:.{digits}f}"### generate_report('Skoda', 'Octavia', '9 l/100 km', '1 500 000 RUB')### # Создание файла csv## import csv          # Импортируем модуль csv### # Создаем данные для заполнения в csv# car_data = [['brand', 'model', 'year', 'price (mln)'], ['Scoda', 'Octavia', '2021', '1.7'], ['Merсedes-Benz', 'GLA',#             '2021', '3.2'], ['Volvo', 'S60', '2021', '3.0']]### # Создадим csv файл# with open('data_avto.csv', 'w') as f:#     writer = csv.writer(f)#     writer.writerows(car_data)# Создадим файл json# Пдключаем модель jsonimport jsondict_avto = {'brand': 'Volvo', 'Model': 'S60', 'Year': '2021', 'Price (million) ': '3.0'}# Создадим файл jsonwith open('data_avto.json', 'w') as f:    json.dump(dict_avto, f)
